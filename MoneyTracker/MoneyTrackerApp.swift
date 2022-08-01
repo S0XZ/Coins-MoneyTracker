@@ -10,11 +10,13 @@ import SwiftUI
 @main
 struct MoneyTrackerApp: App {
     let persistenceController = PersistenceController.shared
+    @StateObject var modelData = ModelData()
 
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environmentObject(modelData)
+//                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }

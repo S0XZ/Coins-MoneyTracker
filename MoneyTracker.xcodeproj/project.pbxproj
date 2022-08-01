@@ -7,22 +7,54 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		708738B328891E1F0011F8E1 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708738B228891E1F0011F8E1 /* SummaryView.swift */; };
+		708738B5288921A60011F8E1 /* EntryRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708738B4288921A60011F8E1 /* EntryRowView.swift */; };
+		708738B9288BDF6C0011F8E1 /* EntryEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708738B8288BDF6C0011F8E1 /* EntryEditView.swift */; };
+		708738BB288C24590011F8E1 /* TodayAmountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708738BA288C24590011F8E1 /* TodayAmountView.swift */; };
+		708738BD288C51DD0011F8E1 /* LabelManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708738BC288C51DD0011F8E1 /* LabelManagerView.swift */; };
+		708738C0288FE0F80011F8E1 /* LabelEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708738BF288FE0F80011F8E1 /* LabelEditView.swift */; };
+		708738C2289101A00011F8E1 /* LabelAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708738C1289101A00011F8E1 /* LabelAddView.swift */; };
+		708738C428913ACB0011F8E1 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708738C328913ACB0011F8E1 /* ChartView.swift */; };
+		70AC713328980A8600E3E5FE /* DateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708738EA28965D810011F8E1 /* DateTest.swift */; };
 		70CDDC7928865E1B00BA30A0 /* MoneyTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CDDC7828865E1B00BA30A0 /* MoneyTrackerApp.swift */; };
-		70CDDC7B28865E1B00BA30A0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CDDC7A28865E1B00BA30A0 /* ContentView.swift */; };
+		70CDDC7B28865E1B00BA30A0 /* DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CDDC7A28865E1B00BA30A0 /* DemoView.swift */; };
 		70CDDC7D28865E1C00BA30A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70CDDC7C28865E1C00BA30A0 /* Assets.xcassets */; };
 		70CDDC8028865E1C00BA30A0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70CDDC7F28865E1C00BA30A0 /* Preview Assets.xcassets */; };
 		70CDDC8228865E1C00BA30A0 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CDDC8128865E1C00BA30A0 /* Persistence.swift */; };
 		70CDDC8528865E1C00BA30A0 /* MoneyTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 70CDDC8328865E1C00BA30A0 /* MoneyTracker.xcdatamodeld */; };
+		70CDDC8C28865E9600BA30A0 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CDDC8B28865E9600BA30A0 /* ListView.swift */; };
+		70CDDC8E28865F8200BA30A0 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CDDC8D28865F8200BA30A0 /* Model.swift */; };
+		70CDDC902886619800BA30A0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CDDC8F2886619800BA30A0 /* ContentView.swift */; };
+		70CDDC9228866EC100BA30A0 /* EntryAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CDDC9128866EC100BA30A0 /* EntryAddView.swift */; };
+		70CDDC942886A5A200BA30A0 /* EntryLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CDDC932886A5A200BA30A0 /* EntryLabel.swift */; };
+		70CDDC962886AA7100BA30A0 /* LabelPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CDDC952886AA7100BA30A0 /* LabelPickerView.swift */; };
+		70CDDC9A2887E49800BA30A0 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CDDC992887E49800BA30A0 /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		708738B228891E1F0011F8E1 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
+		708738B4288921A60011F8E1 /* EntryRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryRowView.swift; sourceTree = "<group>"; };
+		708738B8288BDF6C0011F8E1 /* EntryEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryEditView.swift; sourceTree = "<group>"; };
+		708738BA288C24590011F8E1 /* TodayAmountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayAmountView.swift; sourceTree = "<group>"; };
+		708738BC288C51DD0011F8E1 /* LabelManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelManagerView.swift; sourceTree = "<group>"; };
+		708738BF288FE0F80011F8E1 /* LabelEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelEditView.swift; sourceTree = "<group>"; };
+		708738C1289101A00011F8E1 /* LabelAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelAddView.swift; sourceTree = "<group>"; };
+		708738C328913ACB0011F8E1 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
+		708738EA28965D810011F8E1 /* DateTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTest.swift; sourceTree = "<group>"; };
 		70CDDC7528865E1B00BA30A0 /* MoneyTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoneyTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70CDDC7828865E1B00BA30A0 /* MoneyTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyTrackerApp.swift; sourceTree = "<group>"; };
-		70CDDC7A28865E1B00BA30A0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		70CDDC7A28865E1B00BA30A0 /* DemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoView.swift; sourceTree = "<group>"; };
 		70CDDC7C28865E1C00BA30A0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		70CDDC7F28865E1C00BA30A0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		70CDDC8128865E1C00BA30A0 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		70CDDC8428865E1C00BA30A0 /* MoneyTracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MoneyTracker.xcdatamodel; sourceTree = "<group>"; };
+		70CDDC8B28865E9600BA30A0 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
+		70CDDC8D28865F8200BA30A0 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		70CDDC8F2886619800BA30A0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		70CDDC9128866EC100BA30A0 /* EntryAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryAddView.swift; sourceTree = "<group>"; };
+		70CDDC932886A5A200BA30A0 /* EntryLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryLabel.swift; sourceTree = "<group>"; };
+		70CDDC952886AA7100BA30A0 /* LabelPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelPickerView.swift; sourceTree = "<group>"; };
+		70CDDC992887E49800BA30A0 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +68,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		708738BE288FE0C70011F8E1 /* PickerEditerView */ = {
+			isa = PBXGroup;
+			children = (
+				70CDDC952886AA7100BA30A0 /* LabelPickerView.swift */,
+				708738BC288C51DD0011F8E1 /* LabelManagerView.swift */,
+				708738BF288FE0F80011F8E1 /* LabelEditView.swift */,
+				708738C1289101A00011F8E1 /* LabelAddView.swift */,
+			);
+			path = PickerEditerView;
+			sourceTree = "<group>";
+		};
+		70AC713128980A2500E3E5FE /* Summary */ = {
+			isa = PBXGroup;
+			children = (
+				708738B228891E1F0011F8E1 /* SummaryView.swift */,
+				708738C328913ACB0011F8E1 /* ChartView.swift */,
+				708738EA28965D810011F8E1 /* DateTest.swift */,
+			);
+			path = Summary;
+			sourceTree = "<group>";
+		};
 		70CDDC6C28865E1B00BA30A0 = {
 			isa = PBXGroup;
 			children = (
@@ -56,9 +109,9 @@
 			isa = PBXGroup;
 			children = (
 				70CDDC7828865E1B00BA30A0 /* MoneyTrackerApp.swift */,
-				70CDDC7A28865E1B00BA30A0 /* ContentView.swift */,
+				70CDDC972887C78600BA30A0 /* View */,
+				70CDDC982887C79900BA30A0 /* Code */,
 				70CDDC7C28865E1C00BA30A0 /* Assets.xcassets */,
-				70CDDC8128865E1C00BA30A0 /* Persistence.swift */,
 				70CDDC8328865E1C00BA30A0 /* MoneyTracker.xcdatamodeld */,
 				70CDDC7E28865E1C00BA30A0 /* Preview Content */,
 			);
@@ -71,6 +124,33 @@
 				70CDDC7F28865E1C00BA30A0 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		70CDDC972887C78600BA30A0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				70CDDC7A28865E1B00BA30A0 /* DemoView.swift */,
+				70CDDC8F2886619800BA30A0 /* ContentView.swift */,
+				708738B4288921A60011F8E1 /* EntryRowView.swift */,
+				70CDDC8B28865E9600BA30A0 /* ListView.swift */,
+				70CDDC9128866EC100BA30A0 /* EntryAddView.swift */,
+				708738B8288BDF6C0011F8E1 /* EntryEditView.swift */,
+				708738BA288C24590011F8E1 /* TodayAmountView.swift */,
+				70CDDC992887E49800BA30A0 /* SettingsView.swift */,
+				708738BE288FE0C70011F8E1 /* PickerEditerView */,
+				70AC713128980A2500E3E5FE /* Summary */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		70CDDC982887C79900BA30A0 /* Code */ = {
+			isa = PBXGroup;
+			children = (
+				70CDDC932886A5A200BA30A0 /* EntryLabel.swift */,
+				70CDDC8D28865F8200BA30A0 /* Model.swift */,
+				70CDDC8128865E1C00BA30A0 /* Persistence.swift */,
+			);
+			path = Code;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -144,9 +224,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				70CDDC8228865E1C00BA30A0 /* Persistence.swift in Sources */,
+				708738C2289101A00011F8E1 /* LabelAddView.swift in Sources */,
+				70CDDC9228866EC100BA30A0 /* EntryAddView.swift in Sources */,
 				70CDDC8528865E1C00BA30A0 /* MoneyTracker.xcdatamodeld in Sources */,
-				70CDDC7B28865E1B00BA30A0 /* ContentView.swift in Sources */,
+				708738B5288921A60011F8E1 /* EntryRowView.swift in Sources */,
+				70CDDC942886A5A200BA30A0 /* EntryLabel.swift in Sources */,
+				708738BB288C24590011F8E1 /* TodayAmountView.swift in Sources */,
+				70AC713328980A8600E3E5FE /* DateTest.swift in Sources */,
+				708738B9288BDF6C0011F8E1 /* EntryEditView.swift in Sources */,
+				708738BD288C51DD0011F8E1 /* LabelManagerView.swift in Sources */,
+				70CDDC902886619800BA30A0 /* ContentView.swift in Sources */,
+				708738C428913ACB0011F8E1 /* ChartView.swift in Sources */,
+				708738B328891E1F0011F8E1 /* SummaryView.swift in Sources */,
+				70CDDC962886AA7100BA30A0 /* LabelPickerView.swift in Sources */,
+				70CDDC8C28865E9600BA30A0 /* ListView.swift in Sources */,
+				70CDDC8E28865F8200BA30A0 /* Model.swift in Sources */,
+				70CDDC7B28865E1B00BA30A0 /* DemoView.swift in Sources */,
+				708738C0288FE0F80011F8E1 /* LabelEditView.swift in Sources */,
 				70CDDC7928865E1B00BA30A0 /* MoneyTrackerApp.swift in Sources */,
+				70CDDC9A2887E49800BA30A0 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,7 +299,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -257,7 +353,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -283,6 +379,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -312,6 +409,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
