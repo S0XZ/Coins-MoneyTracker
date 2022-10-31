@@ -13,7 +13,7 @@ I don't know how to upload images yet...
 - Coins is made for helping you to record daily expense&income.
 
 - The Privacy Notes?
-- 
+- https://github.com/S0XZ/Coins-MoneyTracker/blob/main/Privacy.md
 
 - How do I get HELP?
 - contact me via **alfsgox@gmail.com**, i speak chinese and english.
