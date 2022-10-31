@@ -6,9 +6,9 @@ The app was made for my code parcticing, so do whatever you want with the code.
 I'm glad to see anyone making use of these code and application.
 
 # Screenshots
+I don't know how to upload images yet...
 
 # Q&A
-
 - What is this app use for?
 - Coins is made for helping you to record daily expense&income.
 
