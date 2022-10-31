@@ -1,0 +1,145 @@
+/* 
+  Localizable.strings
+  Coins
+
+  Created by 老人 on 09/09/2022.
+  
+*/
+
+"Settings" = "设置";
+"OK" = "好";
+"Label Manage" = "标签管理";
+"Add Label" = "添加标签";
+"Emoji..." = "表情符号...";
+"Note..." = "备注";
+"Emoji & Note" = "表情符号与备注";
+"Delete Label" = "删除标签";
+"Label" = "标签";
+"Expense" = "支出";
+"Income" = "收入";
+"Expense Label" = "支出标签";
+"Income Label" = "收入标签";
+"Delete Entry" = "删除条目";
+"Delete Entry?" = "删除条目?";
+"Alert" = "警告";
+"Delete" = "删除";
+"Error" = "错误";
+"Please fill all fields." = "请输入必要信息。";
+"Amount is Required." = "需要输入数额。";
+"No Entries" = "无条目";
+"Add Entry" = "添加条目";
+"Expense Only" = "仅支出";
+"Income Only" = "仅收入";
+"Restore All Labels" = "重置所有标签";
+"Restore" = "重置";
+"Edit" = "编辑";
+"None" = "无";
+"Email" = "邮箱";
+"Widget" = "小组件";
+"Contact Me" = "联系我";
+"Widget use the same color as the accent color." = "小组件使用与强调色相同的颜色。";
+"View the entries summary of today" = "查看今日的条目汇总";
+"Today Summary" = "今日汇总";
+
+
+"This Year" = "本年";
+"This Month" = "本月";
+"This Week" = "本周";
+"Today" = "今天";
+"Yesterday" = "昨天";
+
+"Amount" = "数额";
+"Cancel" = "取消";
+"Add" = "添加";
+"Done" = "完成";
+"Enter..." = "输入...";
+"Note" = "备注";
+"Date" = "日期";
+"Favorite Only" = "仅收藏";
+"Bank" = "存钱罐";
+"My Bank" = "存钱罐";
+"All I Have" = "我的积蓄";
+"Entry" = "条目";
+"Entries" = "条目";
+"Summary" = "汇总";
+"Expense Summary" = "支出汇总";
+"Income Summary" = "收入汇总";
+"Change Goal" = "更改目标";
+"My Goal" = "我的目标";
+"Goal" = "目标";
+"The Progress" = "进度";
+"This is My Goal" = "这是我的目标";
+"Color" = "颜色";
+"My goal is..." = "我的目标是...";
+"Inital Amount" = "初始数额";
+"I already have..." = "我早已拥有...";
+"I already have" = "我早已拥有";
+"You have reach the goal!" = "你已经达成了目标！";
+"Need to make an effort" = "还得加把劲";
+"No Labels" = "无标签";
+"Please add at least one Label." = "请添加更多标签。";
+"Total Income" = "总计收入";
+"Total Expense" = "总计支出";
+"Most Income" = "收入之最";
+"Most Expense" = "支出之最";
+
+
+"mint" = "薄荷";
+"red" = "红色";
+"brown" = "棕色";
+"blue" = "蓝色";
+"indigo" = "靛蓝";
+"purple" = "紫色";
+"orange" = "橙色";
+"pink" = "粉色";
+"green" = "绿色";
+
+"Cost Most" = "最高消费";
+"No Enough Data" = "数据不足";
+"Group entries by date" = "为条目按日期分组";
+"Welcome to ***Coins***" = "欢迎来到Coins";
+"Expense & Icome" = "支出&收入";
+"Manage Your Entries" = "管理你的条目";
+"Recent Summary" = "汇总";
+"Automaticly Analyze Data" = "自动分析数据";
+"Labels" = "标签";
+"Use Emoji Labels to Tag Entries" = "使用表情符号来制作标签";
+"Continue" = "继续";
+
+"Food" = "食物";
+"Drinks" = "饮品";
+"Clothing" = "服装";
+"Home" = "家具";
+"Taxi" = "的士";
+"Pets" = "宠物";
+"Party" = "派对";
+"Pills" = "药物";
+"Other" = "其他";
+"Work" = "工作";
+"Gifts" = "礼物";
+"Dream" = "梦想";
+"Travel" = "旅行";
+"Subscription" = "订阅";
+"Tech" = "科技";
+"Movie" = "电影";
+"Square meal" = "大餐";
+"Repair" = "维修";
+"My love" = "我之所爱";
+"Game" = "游戏";
+"Medal" = "奖金";
+"Sale" = "售出";
+
+"I Want to Buy..." = "我想买...";
+"Once reach the goal, I will..." = "一旦实现了目标，我会...";
+"My Dream" = "我的梦想";
+
+"You can disable Daily Limit in Settings." = "你可以在设置中关闭每日支出限额。";
+"You haven't spent today." = "今天没有支出。";
+"Daily Spend Limit" = "每日支出限额";
+"You are over the limit!" = "你已经超出了限额!";
+"About" = "关于";
+"Week" = "周";
+"Last Week" = "上周";
+"Month" = "月";
+
+

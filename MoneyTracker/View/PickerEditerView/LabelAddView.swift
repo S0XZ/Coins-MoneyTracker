@@ -11,11 +11,11 @@ import SwiftUI
 
 struct LabelAddView: View {
     @EnvironmentObject var modelData: ModelData
-    @Binding var isPresent: Bool
+    @Environment(\.dismiss) var dismiss
     @State var isAlertPre: Bool = false
-    @State var message: String = ""
+    @State var message: LocalizedStringKey = ""
     
-    @State var type: EntryType = .expense
+    @State var labelType: LabelType = .expense
     @State var emoji: String = ""
     @State var text: String = ""
     
@@ -24,12 +24,12 @@ struct LabelAddView: View {
             presentAlert(with: "Please fill all fields.")
             return
         }
-        let label = EntryLabel(emoji: emoji, text: text, type: type)
+        let label = EntryLabel(emoji: emoji, text: text, labelType: labelType)
         modelData.addLabel(with: label)
-        isPresent = false
+        dismiss()
     }
     
-    func presentAlert(with message: String) {
+    func presentAlert(with message: LocalizedStringKey) {
         self.message = message
         isAlertPre = true
     }
@@ -37,42 +37,29 @@ struct LabelAddView: View {
     var body: some View {
         NavigationView {
             List {
-                Section {
+                Section() {
                     HStack {
-                        Text("Type")
+                        Text(LocalizedStringKey(
+                            labelType.rawValue
+                        ))
                         Spacer()
-                        Picker("Type", selection: $type) {
-                            Image(systemName: "tray.and.arrow.up")
-                                .tag(EntryType.expense)
-                            Image(systemName: "tray.and.arrow.down")
-                                .tag(EntryType.income)
-                        }
-                        .frame(width: 140)
-                        .pickerStyle(.segmented)
+                        TypePicker(labelType: $labelType)
                     }
                 }
                 
-                HStack {
-                    Text("Emoji")
-                    Divider()
-                    Spacer()
+                Section("Emoji & Note") {
                     TextField("Emoji...", text: $emoji)
-                }
-                  
-                
-                HStack {
-                    Text("Note")
-                    Divider()
                     TextField("Note...", text: $text)
                 }
-                
             }
-            .navigationTitle(text.isEmpty ? "Add Label": text)
+            .navigationTitle(LocalizedStringKey (
+                text.isEmpty ? "Add Label": text
+            ))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
-                       isPresent = false
+                        dismiss()
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
@@ -93,7 +80,7 @@ struct LabelAddView: View {
 struct LabelAddView_Previews: PreviewProvider {
     @State static var modelData = ModelData()
     static var previews: some View {
-        LabelAddView(isPresent: .constant(true))
+        LabelAddView()
             .environmentObject(modelData)
     }
 }

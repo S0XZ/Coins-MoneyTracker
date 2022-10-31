@@ -9,32 +9,13 @@ import SwiftUI
 
 struct ChartView: View {
     @EnvironmentObject var modelData: ModelData
-    var thisWeek: [Date] {
-        guard let range = Calendar.current.range(of: .day, in: .weekOfMonth, for: Date()) else {return []}
-
-        let day = Calendar.current.component(.day, from: Date())
-        var weekRange: [Int] = []
-        for i in range {
-            weekRange.append(i - day)
-        }
-        
-        var dates: [Date] = []
-        for i in weekRange {
-            if let date = Calendar.current.date(byAdding: .day, value: i, to: Date.now) {
-                dates.append(date)
-            } else {
-                dates.append(Date.now)
-            }
-        }
-        
-        return dates
-    }
-    
+    let calendar = Calendar.current
+    var weekIndex: Int = 0
     
     //some View stuff...
     var maxAmount: Double {
         var amounts: [Double] = []
-        for date in thisWeek {
+        for date in calendar.daysWithSameWeekOfYear(as: .now) {
             amounts.append(amountInDay(day: date))
         }
         var maxAmount: Double { amounts.max() ?? 0 }
@@ -44,6 +25,7 @@ struct ChartView: View {
     let maxHeight: Double = 170
     
     private func heightInAmount(amount: Double) -> Double {
+        if maxAmount == 0 {return 0}
         return amount/maxAmount * maxHeight
     }
     //end of view stuff...
@@ -58,7 +40,7 @@ struct ChartView: View {
         var amount: Double {
             var amount: Double = 0
             for entry in entriesInDay {
-                if entry.label.type == self.type {
+                if entry.entryLabel.labelType == self.labelType {
                     amount += entry.amount
                 }
             }
@@ -67,63 +49,76 @@ struct ChartView: View {
         return amount
     }
     
-    @State var type: EntryType = .expense
+    @Binding var labelType: LabelType
     var color: Color {
-        switch type {
+        switch labelType {
         case .expense:
             return .gray
         case .income:
-            return .green
+            return .accentColor
         }
     }
     
-    var body: some View {
-        let typePicker =
-        Picker("Type", selection: $type) {
-            Image(systemName: "tray.and.arrow.up")
-                .tag(EntryType.expense)
-            Image(systemName: "tray.and.arrow.down")
-                .tag(EntryType.income)
+    func fontOpacity(_ amount: Double) -> Double{
+        if amount > 0 {
+            return 0.9
+        } else {
+            return 0.35
         }
-        .frame(width: 140)
-        .pickerStyle(.segmented)
-        
+    }
+    
+    func circleOpacity(_ amount: Double) -> Double {
+        amount == maxAmount ? (amount > 0 ? 1 : 0) : 0
+    }
+    
+    var body: some View {
         VStack {
-            
-            typePicker
             HStack {
-                ForEach(thisWeek, id: \.self) { date in
+                ForEach(calendar.dayWithWeekOfYear(as: .now, with: weekIndex)
+                            , id: \.self) { date in
+                    let amount = amountInDay(day: date)
+                    
                     VStack {
-                        Text(date, format: .dateTime.weekday())
-                            .lineLimit(1)
+                        Text(date, format: .dateTime.weekday(.abbreviated))
+                            .font(.system(size: 16))
                             .opacity(0.7)
+                        
+                        Circle()
+                            .frame(width: 5, height: 5)
+                            .foregroundColor(color)
+                            .opacity(circleOpacity(amount))
+                            .padding(-2)
 
                         RoundedRectangle(cornerRadius: 5)
                             .frame(height: maxHeight)
                             .opacity(0.1)
                             .overlay(alignment: .bottom) {
-                                RoundedRectangle(cornerRadius: 5)
+                                Rectangle()
                                     .foregroundColor(color)
-                                    .blendMode(.multiply)
-                                    .frame(height: heightInAmount(amount: amountInDay(day: date)))
+                                    .frame(height: heightInAmount(amount: amount))
+                            }
+                            .mask {
+                                RoundedRectangle(cornerRadius: 5)
+                                    
                             }
                             .padding(.horizontal, 6)
                         
-                        Text(amountInDay(day: date), format: .currency(code: "USD").precision(.fractionLength(0)))
-                            .bold()
-                            .lineLimit(1)
-
-                            .opacity(0.9)
+                        Text("$" + Int(amount).description)
+                            .font(.system(size: 14))
+                            .fixedSize()
+                            .opacity(fontOpacity(amount))
+                            .animation(nil)
                     }
                 }
             }
+            .padding()
         }
     }
 }
 
 struct ChartView_Previews: PreviewProvider {
     static var previews: some View {
-        ChartView()
+        ChartView(weekIndex: 0, labelType: .constant(.expense))
             .environmentObject(ModelData())
     }
 }

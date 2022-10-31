@@ -8,60 +8,167 @@
 import SwiftUI
 
 struct LabelPickerView: View {
-    @Binding var label: EntryLabel
-    @State var labelType: EntryType = .expense
-    @EnvironmentObject var modelData: ModelData
-    var labels: [EntryLabel] {
-        switch labelType {
-        case .expense:
-            return modelData.expenseLabels
-        case .income:
-            return modelData.incomeLabels
+    @Binding var entryLabel: EntryLabel
+    var labelType: LabelType = .expense
+    @Binding var isAdd: Bool
+    @EnvironmentObject private var modelData: ModelData
+    var rows: [GridItem] =
+            Array(repeating: .init(.flexible()), count: 2)
+    
+    var entryLabelGroups: [[EntryLabel]] {
+        var entryLabelGroups: [[EntryLabel]] = [[]]
+        var pageCount: Int = 0
+
+        for (n,x) in modelData.sortedLabels(type: labelType).enumerated() {
+            guard entryLabelGroups.count == pageCount+1 else {return entryLabelGroups}
+            entryLabelGroups[pageCount].append(x.wrappedValue)
+            if n / (pageCount+1) == 5 {
+                pageCount += 1
+                entryLabelGroups.append([])
+            }
         }
+        
+        return entryLabelGroups
     }
-    var columns: [GridItem] =
-            Array(repeating: .init(.flexible()), count: 3)
+    
     
     var body: some View {
-        let typePicker =
-        Picker("Type", selection: $labelType) {
-            Image(systemName: "tray.and.arrow.up")
-                .tag(EntryType.expense)
-            Image(systemName: "tray.and.arrow.down")
-                .tag(EntryType.income)
-        }
-        .frame(width: 140)
-        .pickerStyle(.segmented)
-        
-        return VStack {
-            typePicker
+        PageView(pages: entryLabelGroups.map{GridView(
+            entryLabel: $entryLabel,
+            entryLabels: $0,
+            labelType: labelType,
+            showEditButton: $0 == entryLabelGroups.last!
+        )}).frame(minHeight: 230)
 
-            
-            ScrollView {
-                LazyVGrid(columns: columns) {
-                    ForEach(labels) { label in
+        return VStack {
+            ScrollView(.horizontal) {
+                LazyHGrid(rows: rows) {
+                    ForEach(modelData.sortedLabels(type: labelType)) { $entryLabel in
                         Button {
-                            self.label = label
+                            self.entryLabel = entryLabel
                         } label: {
                             VStack {
-                                Text("\(label.emoji)")
+                                Text("\(entryLabel.emoji)")
                                     .font(.largeTitle)
-                                Text(label.text)
-                                    
+                                Text(LocalizedStringKey(entryLabel.text))
                                     .font(.footnote)
-                                    .bold()
                                     .lineLimit(1)
+                                    .foregroundStyle(.white)
                                     .colorMultiply(.primary)
                                     .opacity(0.6)
                             }
                             .padding()
-                            .overlay(RoundedRectangle(cornerRadius: 10)
-                                .colorMultiply(.primary)
-                                .frame(width: 70, height: 70)
-                                .opacity(self.label == label ? 0.1 : 0)
-                            )
+                            .overlay {
+                                if self.entryLabel.text == entryLabel.text {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .foregroundStyle(.white)
+                                        .colorMultiply(.primary)
+                                        .frame(width: 70, height: 70)
+                                        .opacity(0.1)
+                                }
+                            }
                         }
                     }
+                    
+                    Button {
+                        isAdd = true
+                    } label: {
+                        VStack {
+                            AddButton()
+                                
+                            Text("Add")
+                                .font(.footnote)
+                                .bold()
+                        }
+                        .padding()
+                    }
+                    
+                    NavigationLink {
+                        LabelManagerView(labelType: labelType)
+                    } label: {
+                        VStack {
+                            EditButton()
+                                
+                            Text("Edit")
+                                .font(.footnote)
+                                .bold()
+                        }
+                        .padding()
+                    }
+                }
+                .frame(minHeight: 200)
+                
+            }
+            .overlay() {
+                HStack {
+                    Spacer()
+                    Rectangle()
+                        .frame(width: 15)
+                        .foregroundStyle(LinearGradient(
+                            colors: [.background(), .background().opacity(0)], startPoint: .trailing, endPoint: .leading
+                        ))
+                }
+            }
+        }
+    }
+}
+
+extension Color {
+    static func background() -> Color {
+        return Color(uiColor: .secondarySystemGroupedBackground)
+    }
+}
+
+struct GridView: View {
+    @Binding var entryLabel: EntryLabel
+    var rows: [GridItem] =
+            Array(repeating: .init(.flexible()), count: 2)
+    var entryLabels: [EntryLabel]
+    var labelType: LabelType
+    var showEditButton: Bool = true
+    
+    
+    var body: some View {
+        LazyHGrid(rows: rows) {
+            ForEach(entryLabels) { entryLabel in
+                Button {
+                    self.entryLabel = entryLabel
+                } label: {
+                    VStack {
+                        Text("\(entryLabel.emoji)")
+                            .font(.largeTitle)
+                        Text(entryLabel.text)
+                            .font(.footnote)
+                            .lineLimit(1)
+                            .foregroundStyle(.white)
+                            .colorMultiply(.primary)
+                            .opacity(0.6)
+                    }
+                    .padding()
+                    .overlay {
+                        if self.entryLabel.text == entryLabel.text {
+                            RoundedRectangle(cornerRadius: 10)
+                                .foregroundStyle(.white)
+                                .colorMultiply(.primary)
+                                .frame(width: 70, height: 70)
+                                .opacity(0.1)
+                        }
+                    }
+                }
+            }
+            
+            if showEditButton{
+                NavigationLink {
+                    LabelManagerView(labelType: labelType)
+                } label: {
+                    VStack {
+                        EditButton()
+                            
+                        Text("Edit")
+                            .font(.footnote)
+                            .bold()
+                    }
+                    .padding()
                 }
             }
         }
@@ -72,9 +179,35 @@ struct LabelPickerView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             List {
-                LabelPickerView(label: .constant(.demoLabels[0]))
+                LabelPickerView(entryLabel: .constant(.demoLabels[0]), isAdd: .constant(false))
                     .environmentObject(ModelData())
             }
         }
+    }
+}
+
+struct AddButton: View {
+    var body: some View {
+        Image(systemName: "plus")
+            .resizable()
+            .scaledToFit()
+            .frame(width: 20)
+            .padding(10)
+            .overlay {
+                Circle().opacity(0.1)
+            }
+    }
+}
+
+struct EditButton: View {
+    var body: some View {
+        Image(systemName: "gearshape")
+            .resizable()
+            .scaledToFit()
+            .frame(width: 20)
+            .padding(10)
+            .overlay {
+                Circle().opacity(0.1)
+            }
     }
 }

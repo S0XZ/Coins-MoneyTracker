@@ -8,56 +8,55 @@
 import SwiftUI
 
 struct LabelEditView: View {
-    var label: EntryLabel
+    var entryLabel: EntryLabel
     @EnvironmentObject var modelData: ModelData
+    @Environment(\.dismiss) var dismiss
+    @State var isDeleted: Bool = false
     
-    private var labelIndex: Int {
-        guard let index: Int = modelData.labels.firstIndex(where: {
-            $0.id == label.id
-        }) else {return 2}
-        return index
+    var index: Int? {
+        return modelData.entryLabels.firstIndex(where: {entryLabel.id == $0.id})
     }
     
     var body: some View {
         List {
-            Section {
-                HStack {
-                    Text("Type")
-                    Spacer()
-                    Picker("Type", selection: $modelData.labels[labelIndex].type) {
-                        Image(systemName: "tray.and.arrow.up")
-                            .tag(EntryType.expense)
-                        Image(systemName: "tray.and.arrow.down")
-                            .tag(EntryType.income)
+            if !isDeleted, let index = index {
+                Section {
+                    HStack {
+                        Text(LocalizedStringKey(modelData.entryLabels[index].labelType.rawValue))
+                        Spacer()
+                        TypePicker(labelType: $modelData.entryLabels[index].labelType)
                     }
-                    .frame(width: 140)
-                    .pickerStyle(.segmented)
+                }
+                
+                Section("Emoji & Note") {
+                    TextField("Emoji...", text: $modelData.entryLabels[index].emoji)
+                    TextField("Note...", text: $modelData.entryLabels[index].text)
                 }
             }
             
-            HStack {
-                Text("Emoji")
-                Divider()
-                Spacer()
-                TextField("Emoji...", text: $modelData.labels[labelIndex].emoji)
-            }
-              
-            
-            HStack {
-                Text("Note")
-                Divider()
-                TextField("Note...", text: $modelData.labels[labelIndex].text)
+            Section {
+                HStack {
+                    Spacer()
+                    Button(role: .destructive) {
+                        isDeleted = true
+                        dismiss()
+                        modelData.deleteLabel(entryLabel)
+                    } label: {
+                        Text("Delete Label")
+                    }
+                    Spacer()
+                }
             }
             
         }
-        .navigationTitle(label.text)
+        .navigationTitle("\(entryLabel.text)")
     }
 }
 
 struct LabelEditView_Previews: PreviewProvider {
     @State static var modelData = ModelData()
     static var previews: some View {
-        LabelEditView(label: modelData.labels[0])
+        LabelEditView(entryLabel: EntryLabel.demoLabels[0])
             .environmentObject(modelData)
     }
 }

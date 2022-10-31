@@ -9,15 +9,22 @@ import SwiftUI
 
 struct EntryAddView: View {
     @EnvironmentObject var modelData: ModelData
-    @Binding var isPresent: Bool
-    @State var label: EntryLabel = .demoLabels[0]
+    @EnvironmentObject var preferData: PreferData
+    @EnvironmentObject var wantData: WantData
+    @Environment(\.dismiss) var dismiss: DismissAction
+    @State var entryLabel: EntryLabel = .demoLabels[0]
     @State var amount: Double?
     @State var note: String = ""
-    @State var entryType: EntryType = .expense
+    @State var labelType: LabelType = .expense
     @State var date: Date = Date()
+    @State var isFavorite: Bool = false
     @State var isAlertPre = false
     @FocusState private var focusField: Field?
-    @State var alertMessage: String = "Error"
+    @State var alertMessage: LocalizedStringKey = "Error"
+    
+    @State var isAddLabel = false
+    
+    var isWantEntry: Bool = false
     
     var dateRange: ClosedRange<Date> {
         let min = Calendar.current.date(byAdding: .year, value: -2, to: Date())!
@@ -38,45 +45,40 @@ struct EntryAddView: View {
             return
         }
 
-        let entry = Entry(label: label, amount: amount, note: note, date: date)
-        modelData.addEntry(with: entry)
+        let entry = Entry(entryLabel: entryLabel, amount: amount, note: note, date: date, isFavorite: isFavorite)
+        if isWantEntry {
+            wantData.wantEntries.append(entry)
+        } else {
+            modelData.addEntry(with: entry)
+        }
+        
 
-        isPresent = false
+        dismiss()
     }
     
-    func presentAlert(message: String) {
+    func presentAlert(message: LocalizedStringKey) {
         alertMessage = message
         isAlertPre = true
-    }
-    
-    func makeColor(type: EntryType) -> Color {
-        var color: Color {
-            switch type {
-            case .expense:
-                return .primary
-            case .income:
-                return .green
-            }
-        }
-        return color
     }
     
     var body: some View {
         NavigationView {
             List {
-                Section {
+                Section() {
                     VStack(alignment: .leading) {
                         HStack {
                             Image(systemName: "dollarsign.circle")
+                                .symbolRenderingMode(.hierarchical)
+                                .foregroundColor(.accentColor)
                             Text("Amount")
                             Spacer()
                         }
                                        
                     }
                     
-                    TextField("Enter...", value: $amount, format: .currency(code: "USD"))
+                    TextField("Enter...", value: $amount, format: .number.precision(.fractionLength(1)))
                         .font(.system(size: 60, weight: .thin, design: .default))
-                        .foregroundColor(makeColor(type: label.type))
+                        .foregroundColor(ModelData.makeColor(type: entryLabel.labelType))
                         .keyboardType(.decimalPad)
                         .disableAutocorrection(true)
                         .focused($focusField, equals: .amountField)
@@ -86,22 +88,37 @@ struct EntryAddView: View {
                 }
                 
                 Section {
-                    LabelPickerView(label: $label)
-                        
-                    DatePicker(selection: $date, in: dateRange,displayedComponents: .date) {
-                        HStack {
-                            Image(systemName: "calendar")
-                            Text("Date")
-                        }
+                    LabelPickerView(entryLabel: $entryLabel, labelType: labelType, isAdd: $isAddLabel)
+                    //保证第一个label不为空
+                    .onChange(of: self.labelType) { _ in
+                        guard let label = modelData.sortedLabels(type: labelType).first
+                        else {return}
+                        self.entryLabel = label.wrappedValue
                     }
+                } header: {
+                    Text(LocalizedStringKey(
+                        labelType.rawValue + " Label"
+                    ))
                 }
                 
-                Section {
+                Section() {
                     HStack {
-                        Image(systemName: "pencil")
-                        
+                        Image(systemName: "square.and.pencil")
+                            .symbolRenderingMode(.hierarchical)
+                            .foregroundColor(.accentColor)
                         TextField("Note...", text: $note)
                             .focused($focusField, equals: .noteField)
+                    }
+                    
+                    if !isWantEntry {
+                        DatePicker(selection: $date, in: dateRange,displayedComponents: .date) {
+                            HStack {
+                                Image(systemName: "calendar")
+                                    .symbolRenderingMode(.hierarchical)
+                                    .foregroundColor(.accentColor)
+                                Text("Date")
+                            }
+                        }
                     }
                 }
             }
@@ -113,19 +130,34 @@ struct EntryAddView: View {
             } message: {
                 Text(alertMessage)
             }
-            .navigationTitle("New Entry")
+            .navigationTitle(entryLabel.text)
             .navigationBarTitleDisplayMode(.inline)
+            .sheet(isPresented: $isAddLabel) {
+                LabelAddView(labelType: labelType)
+            }
+            .accentColor(preferData.preferColor)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") {
-                        isPresent = false
+                        dismiss()
                     }
                 }
                 
-                ToolbarItem(placement: .confirmationAction) {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    if !isWantEntry {
+                        Button {
+                            isFavorite.toggle()
+                        } label: {
+                            Image(systemName: isFavorite ? "star.fill" : "star")
+                        }
+                    }
                     Button("Add") {
                         finishAdd()
                     }
+                }
+                
+                ToolbarItem(placement: .principal) {
+                    TypePicker(labelType: $labelType)
                 }
             }
         }
@@ -134,7 +166,9 @@ struct EntryAddView: View {
 
 struct EntryAddView_Previews: PreviewProvider {
     static var previews: some View {
-        EntryAddView(isPresent: .constant(false))
+        EntryAddView()
+            .environmentObject(PreferData())
             .environmentObject(ModelData())
+            .environmentObject(WantData())
     }
 }

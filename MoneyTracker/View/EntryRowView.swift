@@ -12,29 +12,75 @@ struct EntryRowView: View {
     
     var body: some View {
         HStack() {
-            Text(entry.label.emoji)
+            Text(entry.entryLabel.emoji)
                 .font(.largeTitle)
-            
-            Divider()
-            
+                .lineLimit(1)
+                .frame(width: 40)
+                        
             VStack(alignment: .leading) {
-                Text(entry.label.text)
+                HStack {
+                    Text(LocalizedStringKey(entry.entryLabel.text))
+                    if entry.isFavorite {
+                        Image(systemName: "star.fill")
+                            .imageScale(.small)
+                            .foregroundColor(.accentColor)
+                            .transition(.scale)
+                    }
+                }
                 
-                if !entry.note.isEmpty {
-                    Text("\(entry.note)")
-                        .opacity(0.5)
-                        .font(.caption)
+                if entry.note.isEmpty {
+                    HStack {
+                        Image(systemName: "calendar")
+                            .imageScale(.small)
+                        
+                        Text(entry.date, formatter: shortFormatter)
+                            
+                            .font(.caption)
+                    }
+                    .opacity(0.5)
+                } else {
+                    HStack {
+                        Image(systemName: "square.and.pencil")
+                            .imageScale(.small)
+                        
+                        Text("\(entry.note)")
+                            .font(.caption)
+                    }
+                    .opacity(0.85)
                 }
             }
             
             Spacer()
             
-            Text(entry.amount, format: .currency(code: "USD"))
-                .bold()
+            
+            
+            DollarAmount(amount: entry.amount, isBold: true)
                 .padding(5)
                 .opacity(entry.opacity)
                 .foregroundColor(entry.color)
+            
+            Image(systemName: ModelData.makeIcon(with: entry.entryLabel.labelType))
+                .imageScale(.small)
+                .opacity(entry.opacity)
+                .foregroundColor(entry.color)
         }
+    }
+}
+
+private let shortFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateStyle = .medium
+    formatter.timeStyle = .none
+    return formatter
+}()
+
+struct AmountView: View {
+    let amount: Double
+    
+    var body: some View {
+        Text(amount, format: .currency(code: "USD").precision(.fractionLength(
+            amount>999 ? 0 : 2
+        )))
     }
 }
 

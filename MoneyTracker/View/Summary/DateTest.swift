@@ -12,13 +12,18 @@ struct DateTest: View {
     
     
     @State var interval = Calendar.current.dateInterval(of: .weekOfMonth, for: Date.now)
-    var range = Calendar.current.range(of: .day, in: .weekOfMonth, for: Date.now)
+    
+    var range = Calendar.current.range(of: .weekday, in: .weekOfYear, for: Date.now)
+    
     var component = Calendar.current.dateComponents([.day, .month], from: Date.now)
 
     var range2: Range<Int> {
-        let startInt = calendar.component(.day, from: interval!.start)
-        let endInt = calendar.component(.day, from: interval!.end)
-        return startInt ..< endInt
+        if let interval = interval {
+            let startInt = calendar.component(.day, from: interval.start)
+            let endInt = calendar.component(.day, from: interval.end)
+            
+            return startInt ..< endInt
+        } else {return 0..<1}
     }
     var thisWeek: [Date] {
 
@@ -40,11 +45,30 @@ struct DateTest: View {
         return dates
     }
     
+    var thisWeek2: [Date] {
+        return []
+    }
+    
+    func makeThisWeek() -> [Date] {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: .now)
+        let dayOfWeek = calendar.component(.weekday, from: today)
+        let days = calendar.range(of: .weekday, in: .weekOfYear, for: today)!
+            .compactMap { calendar.date(byAdding: .day, value: $0 - dayOfWeek, to: today) }
+            .filter { !calendar.isDateInWeekend($0) }
+        return days
+    }
+    
     var body: some View {
         List {
             Text("""
                  ***目前这周的interval:***
                  \(interval.debugDescription)
+                 """)
+            
+            Text("""
+                 ***目前这周的range2:***
+                         \(makeThisWeek().description)
                  """)
             
             Text("""
@@ -56,6 +80,24 @@ struct DateTest: View {
                  ***查询「今天」是第几个月， 第几天？:***
                  \(component.debugDescription)
                  """)
+            
+            Text(Calendar.current.daysWithSameWeekOfYear(as: .now).description)
+            
+            HStack {
+                
+                Text("A")
+                    .font(.caption)
+                Text("A")
+                    .font(.footnote)
+                Text("A")
+                    .font(.subheadline)
+                Text("A")
+                    .font(.callout)
+                Text("A")
+                Text("A")
+                    .font(.headline)
+                
+            }
 
 //            Text(range2.debugDescription)
         }

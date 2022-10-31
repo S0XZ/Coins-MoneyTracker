@@ -9,34 +9,57 @@ import SwiftUI
 
 struct LabelManagerView: View {
     @EnvironmentObject var modelData: ModelData
-    @State var labelType: EntryType = .expense
+    @State var labelType: LabelType = .expense
     @State var isPresent: Bool = false
+    @State var isAlertRestoreLabels = false
     
-    var labels: [EntryLabel] {
-        switch labelType {
-        case .expense:
-            return modelData.expenseLabels
-        case .income:
-            return modelData.incomeLabels
-        }
-    }
-    
-    func addLabel(with type: EntryType?) {
+    func addLabel(with type: LabelType?) {
         isPresent = true
     }
     
     var body: some View {
         List { 
-            ForEach(labels) { label in
+            ForEach(modelData.sortedLabels(type: labelType)) { $entryLabel in
                 NavigationLink {
-                    LabelEditView(label: label)
+                    LabelEditView(entryLabel: entryLabel)
                 } label: {
                     HStack {
-                        Text(label.emoji)
-                        Text(label.text)
+                        Text(entryLabel.emoji)
+                        Text(entryLabel.text)
+                    }
+                }
+                .swipeActions {
+                    Button(role: .destructive) {
+                        modelData.deleteLabel(entryLabel)
+                    } label: {
+                        Image(systemName: "trash")
                     }
                 }
             }
+            
+            Section {
+                Button(role: .destructive) {
+                   isAlertRestoreLabels = true
+                } label: {
+                    HStack {
+                        Spacer()
+                        Image(systemName: "arrow.clockwise")
+                        Text("Restore All Labels")
+                        Spacer()
+                    }
+                }
+            }
+        }
+        .alert("Restore All Labels", isPresented: $isAlertRestoreLabels){
+            Button(role: .destructive) {
+                modelData.entryLabels = EntryLabel.demoLabels
+            } label: {
+                HStack {
+                    Text("Restore")
+                }
+            }
+        } message: {
+            
         }
         .pickerStyle(.segmented)
         .toolbar {
@@ -49,21 +72,15 @@ struct LabelManagerView: View {
             }
             
             ToolbarItem(placement: .principal) {
-                Picker("Type", selection: $labelType) {
-                    Image(systemName: "tray.and.arrow.up")
-                        .tag(EntryType.expense)
-                    Image(systemName: "tray.and.arrow.down")
-                        .tag(EntryType.income)
-                }
-                .frame(width: 140)
-                .pickerStyle(.segmented)
+                TypePicker(labelType: $labelType)
             }
         }
         .sheet(isPresented: $isPresent) {
-            LabelAddView(isPresent: $isPresent, type: labelType)
+            LabelAddView(labelType: labelType)
         }
         .navigationTitle("Label Manage")
         .navigationBarTitleDisplayMode(.inline)
+        .animation(.slow(), value: labelType)
     }
 }
 

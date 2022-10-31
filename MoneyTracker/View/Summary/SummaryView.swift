@@ -9,158 +9,199 @@ import SwiftUI
 
 struct SummaryView: View {
     @EnvironmentObject var modelData: ModelData
-    @State var type: EntryType = .expense
-
-    var thisWeek: [Date] {
-        let range = Calendar.current.range(of: .day, in: .weekOfMonth, for: Date())!
-        var dates: [Date] = []
-        for i in range {
-            let date = Calendar.current.date(bySetting: .day, value: i, of: Date())!
-            dates.append(date)
-        }
-        
-        return dates
-    }
-    
-    func amountInDay(day: Date) -> (Double, EntryType) {
-        var entriesInDay: [Entry] {
-            modelData.entries.filter({ entry in
-                let calendar = Calendar.current
-                return calendar.isDate(entry.date, inSameDayAs: day)
-            })
-        }
-        var amount: Double {
-            var amount: Double = 0
-            for entry in entriesInDay {
-                if entry.label.type == .expense {
-                    amount -= entry.amount
-                } else if entry.label.type == .income {
-                    amount += entry.amount
-                }
-            }
-            return amount
-        }
-        var type: EntryType {
-            if amount > 0 {
-                return .income
-            } else {
-                return .expense
-            }
-        }
-        return (amount, type)
-    }
-    
-    var entriesInWeek: [Entry] {
-        modelData.entries.filter({ entry in
-            let calendar = Calendar.current
-            return calendar.isDate(entry.date, equalTo: Date.now, toGranularity: .weekOfYear) &&
-            calendar.isDate(entry.date, equalTo: Date.now, toGranularity: .year)
+    @State var dateComponentOfSummary: DateComponentOfSummary = .week
+    @State var labelType: LabelType = .expense
+    @State var weekIndex: Int = 0
+    func weekString(weekIndex: Int) -> LocalizedStringKey {
+        switch weekIndex {
+        case 0:
+            return "This Week"
+        case -1:
+            return "Last Week"
+        default:
+            let calendar: Calendar = Calendar.current
             
-        })
+            guard let startOfThisWeek =  calendar.startOfWeek(for: .now) else {return ""}
+            guard let startOfWeek = calendar.date(byAdding: .day, value: weekIndex*7, to: startOfThisWeek) else {return ""}
+            guard let endOfWeek = calendar.date(byAdding: .day, value: 6, to: startOfWeek) else {return ""}
+            
+            let startOfWeekString: String = calendar.makeDateDescription(date: startOfWeek)
+            let endOfWeekString: String = calendar.makeDateDescription(date: endOfWeek)
+            return "\(startOfWeekString) - \(endOfWeekString)"
+            
+        }
     }
+    
+    let verticalPad: CGFloat = 2
+    let horizontalPad: CGFloat = 20
     
     var body: some View {
-        let typePicker =
-        Picker("Type", selection: $type) {
-            Image(systemName: "tray.and.arrow.up")
-                .tag(EntryType.expense)
-            Image(systemName: "tray.and.arrow.down")
-                .tag(EntryType.income)
-        }
-        .frame(width: 140)
-        .pickerStyle(.segmented)
-        
         NavigationView {
-            ZStack {
-                List {
-                    Rectangle()
-                        .frame(height: 300)
-                        .opacity(0)
-                    
-                    ForEach(entriesInWeek) { entry in
-                        EntryRowView(entry: entry)
-                    }
-                }
-                
-                VStack {
-                    HStack {
-                        ForEach(thisWeek, id: \.self) { date in
-                            VStack {
-                                Text(date, format: .dateTime.weekday())
-                                    .lineLimit(1)
-                                    .opacity(0.7)
-                                
-                                RoundedRectangle(cornerRadius: 5)
-                                    .frame(height: 170)
-                                    .opacity(0.1)
-                                    .overlay {
-                                        VStack() {
-                                            Spacer()
-                                            RoundedRectangle(cornerRadius: 5)
-                                                .foregroundColor(.green)
-                                                .blendMode(.multiply)
-                                                .frame(height: amountInDay(day: date).0)
-                                        }
-                                    }
-                                    .padding(.horizontal, 6)
-                                    
-                                Text(amountInDay(day: date).0, format: .currency(code: "USD").precision(.fractionLength(0)))
-                                    .bold()
-                                    .lineLimit(1)
-                                    
-                                    .opacity(0.9)
-                                    .foregroundColor(makeColor(type: amountInDay(day: date).1))
+            ScrollView {
+  
+                MySpacer()
+                HStack {
+                    Menu {
+                        Picker(selection: $weekIndex) {
+                            ForEach(modelData.makeWeekIndexs(), id: \.self) {
+                                Text(weekString(weekIndex: $0)).tag($0)
                             }
+                        } label: {}
+                    } label: {
+                        HStack {
+                            Text(weekString(weekIndex: weekIndex))
+                                .font(.title3)
+                            Image(systemName: "chevron.right")
                         }
                     }
-                    .padding(20)
-                    .background(.ultraThinMaterial)
-                    
-                    Divider() .padding(.top, -9)
-                    
+
                     Spacer()
                 }
-
+                .animation(nil)
+                .padding(.horizontal, horizontalPad)
+                .padding(.vertical, verticalPad)
+                
+                Group {
+                    MyCell()
+                        .frame(height: 270)
+                        .overlay {
+                            ChartView(weekIndex: weekIndex, labelType: $labelType)
+                                .animation(.slow())
+                        }
+                        .padding(.horizontal, horizontalPad)
+                        .padding(.vertical, verticalPad)
+                    
+                    MySpacer()
+                }
+                
+                Group {
+                    HStack {
+                        //Most Entry
+                        MyCell().frame(height: 150)
+                            .overlay {
+                                Button {
+                                    
+                                } label: {
+                                    EntryItemView(
+                                        entry: modelData.entryMostByWeek(
+                                            type: labelType,
+                                            weekIndex: weekIndex),
+                                        labelType: labelType)
+                                }
+                                .buttonStyle(.plain)
+                            }
+                        
+                        Spacer().frame(width: 20)
+                        
+                        //Total Amount
+                        MyCell().frame(height: 150)
+                            .overlay {
+                                TotalAmountThisWeek(
+                                    labelType: labelType,
+                                    amount: modelData.totalAmountByWeek(
+                                        type: labelType,
+                                        weekIndex: weekIndex))
+                            }
+                    }
+                    .padding(.horizontal, horizontalPad)
+                    .padding(.vertical, verticalPad)
+                    
+                    MySpacer()
+                }
+                
+                Group {
+                    WeekList(labelType: labelType, weekIndex: weekIndex)
+                    .padding(.horizontal, horizontalPad)
+                    .padding(.vertical, verticalPad)
+                    
+                    MySpacer()
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    typePicker
+                    TypePicker(labelType: $labelType)
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Picker(selection: $dateComponentOfSummary) {
+                        ForEach(DateComponentOfSummary.allCases) {
+                            Text($0.rawValue).tag($0)
+                        }
+                    } label: {
+                        
+                    }
                 }
             }
-            .navigationTitle("This Week")
-            .navigationBarTitleDisplayMode(.large)
+            .navigationTitle(LocalizedStringKey(labelType.rawValue + " Summary"))
+            .background(Color(UIColor.systemGroupedBackground))
         }
+        
     }
-    
-    
-  func makeColor(type: EntryType) -> Color {
-      var color: Color {
-          switch type {
-          case .expense:
-              return .primary
-          case .income:
-              return .green
-          }
-      }
-      return color
-  }
-  
-  func makeOpacity(type: EntryType) -> Double {
-      var opacity: Double {
-          switch type {
-          case .expense:
-              return 0
-          case .income:
-              return 1.0
-          }
-      }
-      return opacity
-  }
+}
+
+enum DateComponentOfSummary: LocalizedStringKey, Identifiable, CaseIterable {
+//    case month = "Month"
+    case week = "Week"
+    var id: String {"\(rawValue)"}
 }
 
 struct SummaryView_Previews: PreviewProvider {
     static var previews: some View {
         SummaryView()
             .environmentObject(ModelData())
+    }
+}
+
+struct EntryItemView: View {
+    var entry: Entry?
+    var labelType: LabelType
+    
+    var body: some View {
+        VStack {
+            Text(LocalizedStringKey(
+                "Most " + labelType.rawValue
+            ))
+            Spacer()
+            if let entry = entry {
+                Text(entry.entryLabel.emoji)
+                    .font(.system(size: 40))
+                
+            } else {
+                Text("No Enough Data")
+                    .opacity(0.5)
+            }
+            
+            Spacer()
+            if let entry = entry {
+                DollarAmount(amount: entry.amount)
+                    .opacity(0.4)
+            }
+        }
+        .padding()
+        
+    }
+}
+
+struct TotalAmountThisWeek: View {
+    var labelType: LabelType
+    var color: Color {
+        ModelData.makeColor(type: labelType)
+    }
+    var amount: Double
+    
+    var body: some View {
+        VStack {
+            Text(LocalizedStringKey(
+                "Total " + "\(labelType.rawValue)"
+            ))
+            Spacer()
+            DollarAmount(amount: amount, fontWeight: .light)
+                .font(.system(size: 25))
+                .opacity(amount == 0 ? 0.4 : 0.85)
+                .foregroundColor(color)
+                .fixedSize()
+            Spacer()
+            
+        }
+        .padding()
     }
 }
