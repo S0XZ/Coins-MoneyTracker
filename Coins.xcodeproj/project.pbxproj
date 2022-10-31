@@ -86,7 +86,7 @@
 		702BD6CF28D4F04400E3DD6B /* PageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControl.swift; sourceTree = "<group>"; };
 		702BD6D128D4F0C000E3DD6B /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		702BD6D328D4F14500E3DD6B /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
-		7051196628AF44ED00AE307E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		7051196628AF44ED00AE307E /* Test.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Test.md; sourceTree = "<group>"; };
 		7051196828B0A77500AE307E /* PiggyBank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiggyBank.swift; sourceTree = "<group>"; };
 		7051196A28B0E25100AE307E /* ChangeGoal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeGoal.swift; sourceTree = "<group>"; };
 		7051196C28BB861A00AE307E /* BankBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankBackground.swift; sourceTree = "<group>"; };
@@ -242,7 +242,7 @@
 			isa = PBXGroup;
 			children = (
 				70CDDC7828865E1B00BA30A0 /* MoneyTrackerApp.swift */,
-				7051196628AF44ED00AE307E /* README.md */,
+				7051196628AF44ED00AE307E /* Test.md */,
 				708BD80028CB691C00DC4DEC /* Localizable.strings */,
 				70CDDC972887C78600BA30A0 /* View */,
 				70CDDC982887C79900BA30A0 /* Code */,
