@@ -1,7 +1,7 @@
 # General
 This is an SwiftUI based app, now avaliable on Apptore.
 
-Link: https://apps.apple.com/us/app/coins-personal-money-tracker/id1638464878
+Link: https://apps.apple.com/us/app/coins-personal-money-tracker/id1638464878 
 The app was made for my code parcticing, so do whatever you want with the code.
 I'm glad to see anyone making use of these code and application.
 
