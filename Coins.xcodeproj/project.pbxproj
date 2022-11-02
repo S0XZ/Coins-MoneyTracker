@@ -213,6 +213,13 @@
 			path = Summary;
 			sourceTree = "<group>";
 		};
+		70C887A82912103A00984303 /* Github Screenshots */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Github Screenshots";
+			sourceTree = "<group>";
+		};
 		70CDDC6C28865E1B00BA30A0 = {
 			isa = PBXGroup;
 			children = (
@@ -254,6 +261,7 @@
 		70CDDC7E28865E1C00BA30A0 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
+				70C887A82912103A00984303 /* Github Screenshots */,
 				70CDDC7F28865E1C00BA30A0 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
