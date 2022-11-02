@@ -5,9 +5,9 @@ The app was made for my code parcticing, so do whatever you want with the code.
 I'm glad to see anyone making use of these code and application.
 
 # Screenshots
-https://github.com/S0XZ/Coins-MoneyTracker/blob/main/MoneyTracker/Preview%20Content/Preview%20Assets.xcassets/O1.imageset/O1.png
-https://github.com/S0XZ/Coins-MoneyTracker/blob/main/MoneyTracker/Preview%20Content/Preview%20Assets.xcassets/O1.imageset/O2.png
-https://github.com/S0XZ/Coins-MoneyTracker/blob/main/MoneyTracker/Preview%20Content/Preview%20Assets.xcassets/O1.imageset/O3.png
+https://raw.githubusercontent.com/S0XZ/Coins-MoneyTracker/main/MoneyTracker/Preview%20Content/Preview%20Assets.xcassets/O1.imageset/O1.png
+https://raw.githubusercontent.com/S0XZ/Coins-MoneyTracker/main/MoneyTracker/Preview%20Content/Preview%20Assets.xcassets/O1.imageset/O2.png
+https://raw.githubusercontent.com/S0XZ/Coins-MoneyTracker/main/MoneyTracker/Preview%20Content/Preview%20Assets.xcassets/O1.imageset/O3.png
 
 
 I don't know how to upload images yet...
