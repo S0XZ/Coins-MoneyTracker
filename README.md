@@ -6,8 +6,8 @@ I'm glad to see anyone making use of these code and application.
 
 # Screenshots
 https://raw.githubusercontent.com/S0XZ/Coins-MoneyTracker/main/MoneyTracker/Preview%20Content/Preview%20Assets.xcassets/O1.imageset/O1.png
-https://raw.githubusercontent.com/S0XZ/Coins-MoneyTracker/main/MoneyTracker/Preview%20Content/Preview%20Assets.xcassets/O1.imageset/O2.png
-https://raw.githubusercontent.com/S0XZ/Coins-MoneyTracker/main/MoneyTracker/Preview%20Content/Preview%20Assets.xcassets/O1.imageset/O3.png
+https://raw.githubusercontent.com/S0XZ/Coins-MoneyTracker/main/MoneyTracker/Preview%20Content/Preview%20Assets.xcassets/O2.imageset/O2.png
+https://raw.githubusercontent.com/S0XZ/Coins-MoneyTracker/main/MoneyTracker/Preview%20Content/Preview%20Assets.xcassets/O3.imageset/O3.png
 
 
 I don't know how to upload images yet...
